@@ -1,6 +1,17 @@
+#define _XOPEN_SOURCE 700
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "strerror.h"
+
+const char *errname(int err)
+{
+	if (err < sizeof(errlist) / sizeof(errlist[0]) && errlist[err]) {
+		return errlist[err];
+	}
+	return "-";
+}
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +24,7 @@ int main(int argc, char *argv[])
 
 	do {
 		int err = atoi(argv[n]);
-		printf("%d: %s\n", err, strerror(err));
+		printf("%d: %s [%s]\n", err, strerror(err), errname(err));
 	} while (argv[++n]);
 
 	return 0;
