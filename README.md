@@ -9,5 +9,7 @@ describe system errors based on their numeric values
 
 For example:
 
-```$ ./strerror 1
-1: Operation not permitted [EPERM]```
+```
+$ ./strerror 1
+1: Operation not permitted [EPERM]
+```
