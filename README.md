@@ -1,30 +1,53 @@
 # strerror
-describe system errors based on their numeric values
 
-# compilation
-`make`
+translate error numbers to strings or identifiers
 
-# use
+## Synopsis
 `strerror errno...`
 
-For example:
+## Description
 
-```
-$ ./strerror 1
-1: Operation not permitted [EPERM]
-```
+The `strerror` utility translates error numbers to strings (via the C
+function `strerror()`. If the number matches a symbolic constant defined in
+the header `<errno.h>`, `strerror` will also provide that name.
 
-# hacking
-The file `errlist` contains a list of symbolic constants (AKA C macros) that
-can be expected to be found in `<errno.h>` on POSIX systems. Constants are
-listed one per line. A one-line AWK command transforms this into the bulk
-of `strerror.h`, along with some `printf` calls in `Makefile`.
+## Operands
 
-To add more errors (for instance, GNU or Linux specific stuff that doesn't
-exist in POSIX), just add them, one per line, to `errlist` and re-run `make`.
-Every constant (and I mean every, even standard C constants like `ERANGE` and
-`EDOM`) is only included in the list if it is defined, so there are no
-portability concerns with adding macros that don't exist.
+The `strerror` utility supports the following operands:
 
-There is a problem with adding constants that expand to identical values,
-though, so don't do that.
+`errno`	A numeric error number, typically obtained from the value of the C
+	identifier `errno`.
+
+## STDIN
+
+Not used.
+
+## Input Files
+
+None.
+
+## STDOUT
+
+The `strerror` utility writes the translation of each operand, one per line,
+in the following format:
+
+`"%d: %s [%s]\n", /errno/, /error_string/, /ERROR_DEFINE/`
+
+In this, `/errno/` is the value provided as an operand, `/error_string/` is
+the string returned by the C function `strerror()`, and `/ERROR_DEFINE/` is
+the name of the symbolic constant defined to `/errno/` in `<errno.h>`. If
+`/errno/` does not match a known symbolic constant, `/ERROR_DEFINE/` will
+be `-`.
+
+## STDERR
+
+Not used.
+
+## Output Files
+
+None.
+
+## Exit Status
+
+ 0	Successful completion.
+ >0	An error occurred.
