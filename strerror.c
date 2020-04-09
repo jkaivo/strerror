@@ -1,5 +1,6 @@
 #define _XOPEN_SOURCE 700
 #include <ctype.h>
+#include <locale.h>
 #include <string.h>
 #include <stdio.h>
 #include <strings.h>
@@ -27,6 +28,8 @@ int errnum(const char *name)
 
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, "");
+
 	int n = 1;
 
 	if (argc < 2) {
